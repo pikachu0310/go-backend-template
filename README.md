@@ -8,7 +8,7 @@
 GitHubの `Use this template` ボタンからレポジトリを作成するか、以下の`gonew`コマンドで作成できます。
 
 ```sh
-go run golang.org/x/tools/cmd/gonew@latest github.com/ras0q/go-backend-template {{ project_name }}
+go run golang.org/x/tools/cmd/gonew@latest github.com/pikachu0310/go-backend-template {{ project_name }}
 ```
 
 ※ GitHub Templateから作成した場合は別途モジュール名を変更することを推奨します。
