@@ -1,5 +1,5 @@
 # go-backend-template 
-このテンプレートは、Rasさんのテンプレートを改変し、何もしなくてもNeoShowcase上でデプロイできるようにしたものです。
+このテンプレートは、[@ras0q さんのテンプレート](https://github.com/ras0q/go-backend-template)を改変し、何もしなくてもNeoShowcase上でデプロイできるようにしたものです。
 
 ## このテンプレートについて
 
