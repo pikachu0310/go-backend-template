@@ -3,6 +3,7 @@ package handler
 import (
 	"fmt"
 	"github.com/pikachu0310/go-backend-template/internal/repository"
+	"github.com/pikachu0310/go-backend-template/openapi/models"
 	"net/http"
 
 	vd "github.com/go-ozzo/ozzo-validation"
@@ -82,13 +83,13 @@ func (h *Handler) CreateUser(c echo.Context) error {
 }
 
 // GET /api/v1/users/:userID
-func (h *Handler) GetUser(c echo.Context) error {
-	userID, err := uuid.Parse(c.Param("userID"))
+func (h *Handler) GetUser(ctx echo.Context, userId models.UserIdInPath) error {
+	userID, err := uuid.Parse(ctx.Param("userID"))
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, "invalid userID").SetInternal(err)
 	}
 
-	user, err := h.repo.GetUser(c.Request().Context(), userID)
+	user, err := h.repo.GetUser(ctx.Request().Context(), userID)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError).SetInternal(err)
 	}
@@ -99,5 +100,5 @@ func (h *Handler) GetUser(c echo.Context) error {
 		Email: user.Email,
 	}
 
-	return c.JSON(http.StatusOK, res)
+	return ctx.JSON(http.StatusOK, res)
 }
