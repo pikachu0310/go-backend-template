@@ -1,5 +1,7 @@
-# go-backend-template 
-このテンプレートは、[@ras0q さんのテンプレート](https://github.com/ras0q/go-backend-template)を改変し、何もしなくてもNeoShowcase上でデプロイできるようにしたものです。
+# go-backend-template with oapi-codegen
+このテンプレートは、[@ras0q さんのテンプレート](https://github.com/ras0q/go-backend-template)を改変し、何もしなくてもNeoShowcase上でデプロイできるようにしたテンプレートをさらに改変し、[oapi-codegen](https://github.com/deepmap/oapi-codegen)を用いてより安全/簡単/高速に開発できるようにした、`OpenAPI.yaml`の存在が前提のテンプレートです。
+`openapi/openapi.yaml`を書き換え、`tools/tools.go`からコードを生成し、`openapi/server.gen.go`の`ServerInterface`を`internal/handler/*.go`で実装する事で、より安全/簡単/高速にAPIを実装できます。
+また、OpenAPIで定義された`Schemas`や、`Request Body` & `Response Body`が、`openapi/models/models.gen.go`にGoの構造体として生成されており、DBからGoの構造体に落とし込む際にも使えて便利です。
 
 以下の様に、何もしなくても正常に動きます(MariaDBも自動で環境変数を見て繋がります)。
 
