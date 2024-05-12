@@ -29,3 +29,14 @@ test-integration: ## Run the integration tests
 .PHONY: lint
 lint: ## Run the linter
 	golangci-lint run --timeout=5m --fix ./...
+
+.PROXY: oapi
+oapi: generate-server generate-models ## Generate the code from the openapi.yaml file
+
+.PHONY: generate-server
+generate-server: ## Generate the server code
+	cd tools && go run github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen --config=server.cfg.yaml ../openapi/openapi.yaml
+
+.PHONY: generate-models
+generate-models: ## Generate the models code
+	cd tools && go run github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen --config=models.cfg.yaml ../openapi/openapi.yaml
