@@ -40,3 +40,14 @@ generate-server: ## Generate the server code
 .PHONY: generate-models
 generate-models: ## Generate the models code
 	cd tools && go run github.com/deepmap/oapi-codegen/v2/cmd/oapi-codegen --config=models.cfg.yaml ../openapi/openapi.yaml
+
+.PHONY: sqlc
+sqlc: dump-schema generate-code ## Generate the code from the database schema
+
+.PHONY: dump-schema
+dump-schema: ## Dump the schema
+	bash -c "docker exec myapp_db mariadb-dump -u root -ppass --no-data app > tools/all_tables_schema.sql "
+
+.PHONY: generate-code
+generate-code: ## Generate the code
+	cd tools && go run github.com/sqlc-dev/sqlc/cmd/sqlc generate -f sqlc.json
