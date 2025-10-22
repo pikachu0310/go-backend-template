@@ -1,8 +1,8 @@
 package core
 
 import (
-	"github.com/ras0q/go-backend-template/core/internal/handler"
-	"github.com/ras0q/go-backend-template/frontend"
+	"github.com/pikachu0310/go-backend-template/core/internal/handler"
+	"github.com/pikachu0310/go-backend-template/frontend"
 
 	"github.com/labstack/echo/v4"
 )

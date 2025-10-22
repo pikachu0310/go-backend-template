@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/ras0q/go-backend-template/core/internal/repository"
-	"github.com/ras0q/go-backend-template/core/internal/services/photoapi"
+	"github.com/pikachu0310/go-backend-template/core/internal/repository"
+	"github.com/pikachu0310/go-backend-template/core/internal/services/photoapi"
 
 	vd "github.com/go-ozzo/ozzo-validation"
 	"github.com/go-ozzo/ozzo-validation/is"

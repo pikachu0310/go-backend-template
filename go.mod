@@ -1,4 +1,4 @@
-module github.com/ras0q/go-backend-template
+module github.com/pikachu0310/go-backend-template
 
 go 1.24.2
 
