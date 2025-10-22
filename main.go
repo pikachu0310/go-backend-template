@@ -11,6 +11,22 @@ import (
 	"github.com/ras0q/goalie"
 )
 
+// @title Go Backend Template API
+// @version 1.0
+// @description バックエンドテンプレートのAPI仕様書です。
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name API Support
+// @contact.url https://github.com/pikachu0310/go-backend-template
+// @contact.email support@example.com
+
+// @license.name MIT
+// @license.url https://opensource.org/licenses/MIT
+
+// @host localhost:8080
+// @BasePath /api/v1
+// @schemes http https
+
 func main() {
 	if err := run(); err != nil {
 		log.Fatalf("runtime error: %+v", err)

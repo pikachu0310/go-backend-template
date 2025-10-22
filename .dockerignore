@@ -1,5 +1,6 @@
 *
 !core/
+!docs/
 !frontend/
 frontend/dist/
 frontend/node_modules

@@ -119,6 +119,45 @@ func TestUser(t *testing.T) {
 
 外部サービス（traQ, Twitterなど）へのアクセスが発生する場合はTest Doublesでアクセスを置き換えると良いでしょう。
 
+## API Documentation (Swagger/OpenAPI)
+
+このテンプレートでは[swaggo/swag](https://github.com/swaggo/swag)を使用してSwagger/OpenAPIドキュメントを自動生成しています。
+
+> **Note**: `docs/` ディレクトリは自動生成されますが、すぐに開発を始められるようにリポジトリにコミットしています。APIのアノテーションを変更した後は `swag init` を実行してドキュメントを更新し、変更をコミットしてください。
+
+### アノテーションの書き方
+
+各ハンドラー関数にコメント形式でSwaggerアノテーションを追加します：
+
+```go
+// GetUser godoc
+// @Summary ユーザー情報取得
+// @Description 指定したIDのユーザー情報を取得します
+// @Tags users
+// @Accept json
+// @Produce json
+// @Param userID path string true "User ID" format(uuid)
+// @Success 200 {object} GetUserResponse "ユーザー情報"
+// @Failure 400 {object} echo.HTTPError "Bad Request"
+// @Router /users/{userID} [get]
+func (h *Handler) GetUser(c echo.Context) error {
+    // ...
+}
+```
+
+詳しい書き方は[Swagドキュメント](https://github.com/swaggo/swag#declarative-comments-format)を参照してください。
+
+### ドキュメントの生成と更新
+
+`swag init` コマンドでドキュメントを生成します。生成されたファイルは `docs/` ディレクトリに配置され、アプリケーションに組み込まれます。
+
+```bash
+swag init
+```
+
+APIのアノテーションを変更した後は、このコマンドを実行してドキュメントを更新し、変更をコミットしてください。
+開発時は `/swagger/index.html` にアクセスすることでSwagger UIからAPIをテストできます。
+
 ## Tasks
 
 開発に用いるコマンド一覧
@@ -149,13 +188,22 @@ npm run build
 
 アプリをビルドします。
 
-requires: Build-UI
+requires: Build-UI, Generate-Swagger
 
 ```sh
 
 CMD=server
 go mod download
 go build -o ./bin/${CMD} ./main.go
+```
+
+### Generate-Swagger
+
+Swagger/OpenAPIドキュメントを生成・更新します。
+APIのアノテーションを変更した際に実行してください。
+
+```sh
+swag init
 ```
 
 ### Dev
@@ -171,6 +219,7 @@ API、DB、DB管理画面が起動します。
 Compose Watchにより、ソースコードの変更を検知して自動で再起動します。
 
 - <http://localhost:8080/> (API)
+- <http://localhost:8080/swagger/index.html> (Swagger UI)
 - <http://localhost:8081/> (DBの管理画面)
 
 ### Test
@@ -222,8 +271,9 @@ golangci-lint run --timeout=5m --fix ./...
 - ドメインを書く (`internal/domain/`など)
   - 現在は簡単のためにAPIスキーマとDBスキーマのみを書きこれらを直接やり取りしている
   - 本来はアプリの仕様や概念をドメインとして書き、スキーマの変換にはドメインを経由させるべき
-- クライアントAPIスキーマを共通化させる
-  - OpenAPIやGraphQLを使い、そこからGoのファイルを生成する
+- クライアントAPIスキーマを更に活用する
+  - 現在はSwagger/OpenAPIでドキュメントを生成している
+  - さらに [oapi-codegen](https://github.com/oapi-codegen/oapi-codegen) などでOpenAPIからGoコードを生成することで型安全性を高めることも可能
 - 単体テスト・結合テストのカバレッジを上げる
   - カバレッジの可視化には[Codecov](https://codecov.io)(traPだと主流)や[Coveralls](https://coveralls.io)が便利
 - ログの出力を整備する

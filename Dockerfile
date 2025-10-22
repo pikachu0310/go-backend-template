@@ -30,12 +30,19 @@ RUN \
   --mount=type=bind,source=go.sum,target=go.sum \
   go mod download
 
+# Install swag for Swagger documentation generation
+RUN \
+  --mount=type=cache,target=${GOCACHE} \
+  --mount=type=cache,target=${GOMODCACHE} \
+  go install github.com/swaggo/swag/cmd/swag@latest
+
 COPY --from=frontend-builder /app/dist /tmp/dist
 RUN \
   --mount=type=cache,target=${GOCACHE} \
   --mount=type=cache,target=${GOMODCACHE} \
   --mount=type=bind,target=.,readwrite \
   cp -r /tmp/dist /app/frontend/app-ui/dist \
+  && /go/bin/swag init \
   && go build -o /usr/bin/server ./main.go
 
 # use `debug-nonroot` for debug shell access
