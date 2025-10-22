@@ -1,6 +1,10 @@
 # go-backend-template 
 <a href="https://xcfile.dev"><img src="https://xcfile.dev/badge.svg" alt="xc compatible" /></a>
 このテンプレートは、[@ras0q さんのテンプレート](https://github.com/ras0q/go-backend-template)を改変し、何もしなくてもNeoShowcase上でデプロイできるようにしたものです。
+さらに、Swagger/OpenAPIドキュメントの自動生成にも対応しています。
+
+> **Note**: シンプルにNeoShowcase対応だけしたバージョンは[neoshowcaseブランチ](https://github.com/pikachu0310/go-backend-template/tree/neoshowcase)をご利用ください。
+
 以下の様に、何もしなくても正常に動きます(MariaDBも自動で環境変数を見て繋がります)。
 ![image](https://github.com/pikachu0310/go-backend-template/assets/17543997/dee159b2-598c-40ed-807a-9b5680f465a8)
 
