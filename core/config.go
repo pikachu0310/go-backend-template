@@ -2,6 +2,7 @@ package core
 
 import (
 	"net"
+	"os"
 	"strconv"
 
 	"github.com/alecthomas/kong"
@@ -24,11 +25,26 @@ func (c *Config) Parse() {
 func (c Config) MySQLConfig() *mysql.Config {
 	mc := mysql.NewConfig()
 
-	mc.User = c.DBUser
-	mc.Passwd = c.DBPass
-	mc.Net = "tcp"
-	mc.Addr = net.JoinHostPort(c.DBHost, strconv.Itoa(c.DBPort))
-	mc.DBName = c.DBName
+	// NeoShowcase環境かどうかをチェック
+	_, isDeployedOnNeoShowcase := os.LookupEnv("NS_MARIADB_DATABASE")
+	if isDeployedOnNeoShowcase {
+		// NeoShowcase環境の場合はNS_MARIADB_*環境変数を使用
+		mc.User = os.Getenv("NS_MARIADB_USER")
+		mc.Passwd = os.Getenv("NS_MARIADB_PASSWORD")
+		mc.Net = "tcp"
+		mc.Addr = net.JoinHostPort(
+			os.Getenv("NS_MARIADB_HOSTNAME"),
+			os.Getenv("NS_MARIADB_PORT"),
+		)
+		mc.DBName = os.Getenv("NS_MARIADB_DATABASE")
+	} else {
+		// 通常環境の場合はDB_*環境変数を使用
+		mc.User = c.DBUser
+		mc.Passwd = c.DBPass
+		mc.Net = "tcp"
+		mc.Addr = net.JoinHostPort(c.DBHost, strconv.Itoa(c.DBPort))
+		mc.DBName = c.DBName
+	}
 	mc.Collation = "utf8mb4_general_ci"
 	mc.AllowNativePasswords = true
 
