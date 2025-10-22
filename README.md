@@ -18,7 +18,7 @@ GitHubの `Use this template` ボタンからレポジトリを作成します�
 [`gonew`](https://pkg.go.dev/golang.org/x/tools/cmd/gonew) コマンドからでも作成できます。`gonew` コマンドを使うと、モジュール名を予め変更した状態でプロジェクトを作成することができます。
 
 ```sh
-gonew github.com/ras0q/go-backend-template {{ project_name }}
+gonew github.com/pikachu0310/go-backend-template {{ github.com/{name}/{project_name} }}
 ```
 
 ## Requirements
