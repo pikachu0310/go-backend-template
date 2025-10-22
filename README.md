@@ -192,7 +192,7 @@ npm run build
 
 アプリをビルドします。
 
-requires: Build-UI, Generate-Swagger
+requires: Build-UI
 
 ```sh
 
