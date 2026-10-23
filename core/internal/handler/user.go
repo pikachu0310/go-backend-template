@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"database/sql"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -121,6 +123,7 @@ func (h *Handler) CreateUser(c echo.Context) error {
 // @Param userID path string true "User ID" format(uuid)
 // @Success 200 {object} GetUserResponse "ユーザー情報"
 // @Failure 400 {object} ErrorResponse "Bad Request"
+// @Failure 404 {object} ErrorResponse "Not Found"
 // @Failure 500 {object} ErrorResponse "Internal Server Error"
 // @Router /users/{userID} [get]
 func (h *Handler) GetUser(c echo.Context) error {
@@ -131,6 +134,9 @@ func (h *Handler) GetUser(c echo.Context) error {
 
 	user, err := h.repo.GetUser(c.Request().Context(), userID)
 	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return echo.NewHTTPError(http.StatusNotFound).SetInternal(err)
+		}
 		return echo.NewHTTPError(http.StatusInternalServerError).SetInternal(err)
 	}
 
